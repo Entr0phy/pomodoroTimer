@@ -9,10 +9,13 @@ const createTables = `
         id SERIAL PRIMARY KEY,
         user_id INTEGER NOT NULL,
         start_time TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-        end_time TIMESTAMP WITH TIME ZONE,
-        duration_minutes INTEGER DEFAULT 25,
+        time_left INTERVAL, -- Time remaining in the current session
+        status VARCHAR(20) DEFAULT 'active', -- 'active', 'paused', or 'completed'
+        session_type VARCHAR(20) NOT NULL, -- 'work_interval', 'short_break', 'long_break'
+        completed_work_intervals INTEGER DEFAULT 0, -- Number of completed work intervals before this session
         FOREIGN KEY (user_id) REFERENCES users(id)
     );
+    
 
     CREATE TABLE IF NOT EXISTS configurations (
         id SERIAL PRIMARY KEY,
@@ -26,3 +29,4 @@ const createTables = `
 `;
 
 export default createTables
+ 

@@ -2,7 +2,7 @@ import db from '../db'
 import { createUserParams, User } from '../types/userTypes'
 
 const createUser = async ({ name, email }: createUserParams): Promise<User> => {
-    const query = `
+    const createUserQuery = `
         INSERT INTO 
             users (name, email)
         VALUES
@@ -10,18 +10,39 @@ const createUser = async ({ name, email }: createUserParams): Promise<User> => {
         RETURNING *
     `
 
+    const createUserConfigurationQuery = `
+        INSERT INTO 
+            configurations (user_id)
+        VALUES
+            ($1)
+        RETURNING *
+    `
+
+    await db.query('BEGIN');
+
     try {
-        const result = await db.query(query, [name, email])
+
+        //Insert new user into the user table
+        const userResult = await db.query(createUserQuery, [name, email])
+        const userValue = userResult.rows[0]
+        const userId = userResult.rows[0].id
+
+        //Insert a new record into the user configuration table
+        await db.query(createUserConfigurationQuery, [userId])
+
+        //Commit the transaction
+        await db.query('COMMIT')
         console.log('User created successfully')
-        return result.rows[0]
+        return userValue
     } catch (e) {
+        await db.query('ROLLBACK')
         console.log(' Failed to create a user:', e);
         throw e;
     }
 
 }
 
-const updateUser = async ({ id, name, email} : User) : Promise<User> => {
+const updateUser = async ({ id, name, email }: User): Promise<User> => {
     const query = `
         UPDATE 
             users 
@@ -43,7 +64,7 @@ const updateUser = async ({ id, name, email} : User) : Promise<User> => {
     }
 }
 
-const deleteUser = async (id: Number) : Promise<User> => {
+const deleteUser = async (id: Number): Promise<User> => {
     const query = `
         DELETE FROM
             users
@@ -62,7 +83,7 @@ const deleteUser = async (id: Number) : Promise<User> => {
     }
 }
 
-const findUserById = async (id: Number) : Promise <User> => {
+const findUserById = async (id: Number): Promise<User> => {
     const query = `
         SELECT * FROM
             users
