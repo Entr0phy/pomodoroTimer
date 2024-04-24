@@ -1,16 +1,16 @@
 export interface updateConfigurationParams {
-    userId: Number,
-    workDuration: Number,
-    shortBreakDuration: Number,
-    longBreakDuration: Number,
-    longBreakInterval: Number,
+    userId: number,
+    workDuration: number,
+    shortBreakDuration: number,
+    longBreakDuration: number,
+    longBreakInterval: number,
 }
 
 export interface userConfiguration {
-    id: Number,
-    user_id: Number,
-    work_duration: Number,
-    short_break_duration: Number,
-    longBreakDuration: Number,
-    longBreakInterval: Number,
+    id: number,
+    user_id: number,
+    work_duration: number,
+    short_break_duration: number,
+    longBreakDuration: number,
+    longBreakInterval: number,
 }
