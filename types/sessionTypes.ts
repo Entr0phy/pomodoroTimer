@@ -18,5 +18,5 @@ export interface  SessionInterface {
     status: String,
     session_type: String,
     completed_work_intervals: number,
-    pause_time: Date
+    pause_time: Date |  null,
 }

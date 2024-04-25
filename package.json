@@ -4,7 +4,7 @@
   "description": "Backend API service for a pomodoro timer",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "npx tsc",
     "start": "node dist/server.js",
     "dev": "nodemon server.ts"
@@ -18,11 +18,15 @@
     "express": "^4.19.2"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.24.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
     "@types/pg": "^8.11.5",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.0",
     "pg": "^8.11.5",
+    "ts-jest": "^29.1.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   }
